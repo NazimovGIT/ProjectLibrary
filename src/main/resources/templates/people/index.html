@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">    <!-- xmlns:th="http://thymeleaf.org"-->
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+</head>
+<body>
+
+    <!-- с помощью Thymeleaf пройдем по всем людям person из коллекции people-->
+    <div  th:each="person : ${people}">
+        <!-- формируем динамический адрес ссылки к имени, который ведет на страницу человека
+        через метод show контроллера-->
+        <a th:href="@{/people/{id}(id=${person.getId()})}"
+           th:text="${person.getFullName() + ', ' + person.getDateOfBirth()}">user</a>
+    </div>
+    <br/>   <!-- пустая строка-->
+    <hr/>   <!-- горизонтальная линия для отделения-->
+    <!-- кнопка создания нового пользователя-->
+    <form th:method="GET" th:action="@{/people/new}">
+        <input type="submit" value="Добавить читателя"/>
+    </form>
+</body>
+</html>

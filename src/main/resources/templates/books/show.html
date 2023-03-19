@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">    <!-- xmlns:th="http://thymeleaf.org"-->
+<head>
+    <meta charset="UTF-8">
+    <title>Книга</title>
+</head>
+<body>
+    <!-- с помощью Thymeleaf отобразим данные человека, подставив под VALUE-->
+    <p th:text="${book.getTitle() + ', ' + book.getAuthor()+ ', ' + book.getYear()}">VALUE</p>
+
+    <div th:if="${owner}">      <!-- если в модель помещен ключ owner-->
+        <span>Книга сейчас у: </span> <span th:text="${owner.getFullName()}">Person name</span>
+        <form th:method="PATCH"
+              th:action="@{/books/{id}/release(id=${book.getId()})}">
+              <input type="submit" value="Освободить книгу"/>
+        </form>
+    </div>
+    <div th:if="${people}">     <!-- если в модель помещен ключ people-->
+        <span>Эта книга свободна. Кому назначить ее?</span>     <!-- тег "span" как тег "p" но без переноса строки-->
+        <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+            <label for="person">Выберите человека</label>
+            <select th:object = "${person}" th:field="*{id}" id="person">
+                <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}"></option>
+            </select>
+            <input type="submit" value="Назначить книгу"/>
+        </form>
+    </div>
+    <br/>
+    <!-- кнопка страницы редактирования книги-->
+    <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+        <input type="submit" value="Редактировать"/>
+    </form>
+
+    <!-- кнопка удаления книги.
+        С помощью тега <a> нельзя послать DELETE запрос, а только GET запрос,
+        поэтому кнопка будет в виде формы.
+        При нажатии на кнопку Delete будет выполнен DELETE запрос на адрес книги action
+        с использованием скрытого поля _method-->
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+        <input type="submit" value="Удалить"/>
+    </form>
+</body>
+</html>

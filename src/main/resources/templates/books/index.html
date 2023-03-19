@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги</title>
+</head>
+<body>
+
+    <!-- с помощью Thymeleaf пройдем по всем людям person из коллекции people-->
+    <div  th:each="book : ${books}">
+        <!-- формируем динамический адрес ссылки к имени, который ведет на страницу человека
+        через метод show контроллера-->
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+    </div>
+    <br/>   <!-- пустая строка-->
+    <hr/>   <!-- горизонтальная линия для отделения-->
+    <!-- кнопка создания нового пользователя-->
+    <form th:method="GET" th:action="@{/books/new}">
+        <input type="submit" value="Добавить книгу"/>
+    </form>
+</body>
+</html>

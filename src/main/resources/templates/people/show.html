@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">    <!-- xmlns:th="http://thymeleaf.org"-->
+<head>
+    <meta charset="UTF-8">
+    <title>Читатель</title>
+</head>
+<body>
+    <!-- с помощью Thymeleaf отобразим данные человека, подставив под VALUE-->
+    <p th:text="${person.getFullName() + ', ' + person.getDateOfBirth()}">VALUE</p>
+
+    <div th:if="${books.isEmpty()}">
+        Читатель пока не взял ни одной книги
+        <hr/>
+    </div>
+    <div th:if="${!books.isEmpty()}">  <!-- если у человека есть книги, они будут в модели-->
+        <hr/>
+        <b>Книги: </b>
+        <table th:each = "book : ${books}">
+            <tr>
+                <td>
+                    <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', '+ book.getYear()}"
+                          th:style="${book.isOverdue()} ? 'color:red' : 'color:black'">book
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+    </div>
+
+    <!-- кнопка страницы редактирования человека-->
+    <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+        <input type="submit" value="Редактировать"/>
+    </form>
+    <!-- кнопка удаления человека.
+        С помощью тега <a> нельзя послать DELETE запрос, а только GET запрос,
+        поэтому кнопка будет в виде формы.
+        При нажатии на кнопку Delete будет выполнен DELETE запрос на адрес человека action
+        с использованием скрытого поля _method-->
+    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+        <input type="submit" value="Удалить"/>
+    </form>
+</body>
+</html>

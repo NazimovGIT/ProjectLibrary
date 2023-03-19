@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Новая книга</title>
+</head>
+<body>
+<!--  form - раздел документа, содержащий интерактивные элементы для отправки информации (в данном случаем форма для добавления данных о человеке)
+      method - метод выполнения запроса, с которым отправятся данные с формы
+      action - адрес куда послать данные с формы
+      object - обращаемся к объекту, который передан в модель в методе newPerson
+      label - заголовок элемента (в данном случае поля ввода), отображаемого на странице (название Enter name:, предназначено для инпута с id=name)
+      input type="text" - создание интерактивного элемента, в данном случае поля ввода на странице, куда должно вводиться имя нового человека
+      field - обращение к переменной объекта класса Person, в него из формы придет значение
+      th:if=... - при начичии ошибок валидации полей объекта (без БД и с БД), показываем их message красным текстом под полем ввода. Name error заменится текстом message
+      br/ - пустая строка
+      input type="submit" - создание кнопки, которая данные с формы отправит POST запросом на адрес в action-->
+
+<form th:method="POST"
+      th:action="@{/books}"
+      th:object="${book}">
+    <label for="title">Введите название книги: </label>
+    <input type="text" th:field="*{title}" id="title"/>
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+    <br/>
+    <label for="author">Введите автора: </label>
+    <input type="text" th:field="*{author}" id="author"/>
+    <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author error</div>
+    <br/>
+    <label for="year">Введите год: </label>
+    <input type="text" th:field="*{year}" id="year"/>
+    <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year error</div>
+    <br/>
+    <input type="submit" value="Создать"/>
+</form>
+<!--  POST запрос отправляется по адресу action с телом запроса в формате ключ(name)-значение(ввод пользователя)-->
+</body>
+</html>

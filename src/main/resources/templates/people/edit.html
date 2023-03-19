@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование читателя</title>
+</head>
+<body>
+<!--  при методе PATСH, DELETE и PUT обязательно используем таймлив, так как HTML не поддерживает эти методы,
+      таймлив записывает значение PATСH, DELETE и PUT в скрытое поле _method,
+      а в поле method укажет метод POST, который понимает HTML.
+      На стороне Spring методы PATСH, DELETE и PUT считатся с помощью фильтра, который нужно указать в классе конфигурации SpringMVC-->
+<form th:method="PATCH"
+      th:action="@{/people/{id}(id=${person.getId()})}"
+      th:object="${person}">
+    <label for="fullName">Введите ФИО: </label>
+    <input type="text" th:field="*{fullName}" id="fullName"/>
+    <div style="color: red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">fullName error</div>
+    <br/>
+    <label for="dateOfBirth">Введите дату рождения: </label>
+    <input type="text" th:field="*{dateOfBirth}" id="dateOfBirth"/>
+    <div style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">dateOfBirth error</div>
+    <br/>
+    <input type="submit" value="Обновить"/>
+</form>
+</body>
+</html>

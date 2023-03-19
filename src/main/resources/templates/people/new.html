@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Новый читатель</title>
+</head>
+<body>
+<!--  form - раздел документа, содержащий интерактивные элементы для отправки информации (в данном случаем форма для добавления данных о человеке)
+      method - метод выполнения запроса, с которым отправятся данные с формы
+      action - адрес куда послать данные с формы
+      object - обращаемся к объекту, который передан в модель в методе newPerson
+      label - заголовок элемента (в данном случае поля ввода), отображаемого на странице (название Enter name:, предназначено для инпута с id=name)
+      input type="text" - создание интерактивного элемента, в данном случае поля ввода на странице, куда должно вводиться имя нового человека
+      field - обращение к переменной объекта класса Person, в него из формы придет значение
+      th:if=... - при начичии ошибок валидации полей объекта (без БД и с БД), показываем их message красным текстом под полем ввода. Name error заменится текстом message
+      br/ - пустая строка
+      input type="submit" - создание кнопки, которая данные с формы отправит POST запросом на адрес в action-->
+
+<form th:method="POST"
+      th:action="@{/people}"
+      th:object="${person}">
+    <label for="fullName">Введите ФИО: </label>
+    <input type="text" th:field="*{fullName}" id="fullName"/>
+    <div style="color: red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">fullName error</div>
+    <br/>
+    <label for="dateOfBirth">Введите дату рождения (dd/mm/yyyy): </label>
+    <input type="text" th:field="*{dateOfBirth}" id="dateOfBirth"/>
+    <div style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">dateOfBirth error</div>
+    <br/>
+    <input type="submit" value="Создать"/>
+</form>
+<!--  POST запрос отправляется по адресу action с телом запроса в формате ключ(name)-значение(ввод пользователя)-->
+</body>
+</html>
