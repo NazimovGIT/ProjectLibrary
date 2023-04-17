@@ -13,8 +13,8 @@
         <a th:href="@{/people/{id}(id=${person.getId()})}"
            th:text="${person.getFullName() + ', ' + person.getDateOfBirth()}">user</a>
     </div>
-    <br/>   <!-- пустая строка-->
-    <hr/>   <!-- горизонтальная линия для отделения-->
+    <br/>
+    <hr/>
     <!-- кнопка создания нового пользователя-->
     <form th:method="GET" th:action="@{/people/new}">
         <input type="submit" value="Добавить читателя"/>

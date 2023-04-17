@@ -5,10 +5,7 @@
     <title>Редактирование книги</title>
 </head>
 <body>
-<!--  при методе PATСH, DELETE и PUT обязательно используем таймлив, так как HTML не поддерживает эти методы,
-      таймлив записывает значение PATСH, DELETE и PUT в скрытое поле _method,
-      а в поле method укажет метод POST, который понимает HTML.
-      На стороне Spring методы PATСH, DELETE и PUT считатся с помощью фильтра, который нужно указать в классе конфигурации SpringMVC-->
+
 <form th:method="PATCH"
       th:action="@{/books/{id}(id=${book.getId()})}"
       th:object="${book}">

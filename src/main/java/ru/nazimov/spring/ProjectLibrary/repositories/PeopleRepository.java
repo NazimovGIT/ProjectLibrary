@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
-    //выполняет стандартные CRUD операции по сущности Person в БД (эти методы не прописываем)
-    //дополнительно можем писать кастомные методы
+
     Optional<Person> findByFullName(String fullName);
     Optional<Person> findByBooksContains(Book book);
 }

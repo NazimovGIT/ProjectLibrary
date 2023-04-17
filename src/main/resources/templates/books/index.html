@@ -13,8 +13,8 @@
         <a th:href="@{/books/{id}(id=${book.getId()})}"
            th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
     </div>
-    <br/>   <!-- пустая строка-->
-    <hr/>   <!-- горизонтальная линия для отделения-->
+    <br/>
+    <hr/>
     <!-- кнопка создания нового пользователя-->
     <form th:method="GET" th:action="@{/books/new}">
         <input type="submit" value="Добавить книгу"/>

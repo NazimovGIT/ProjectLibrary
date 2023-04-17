@@ -24,7 +24,7 @@ public class BooksController {
         this.booksService = booksService;
         this.peopleService = peopleService;
     }
-    //метод GET запроса для отображения всех книг
+    //Get метод отображения всех книг
     @GetMapping()
     public String index(@RequestParam(name = "page", required = false) Integer page,
                         @RequestParam(name = "books_per_page", required = false) Integer booksPerPage,
@@ -34,7 +34,7 @@ public class BooksController {
             model.addAttribute("books", booksService.findAll(page, booksPerPage, isSortByYear));
         return "books/index";
     }
-    //метод GET запроса для отображения одной книги по id
+    //Get метод отображения одной книги по id
     @GetMapping("/{id}")
     public String show (@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person){
         model.addAttribute("book", booksService.findOne(id));

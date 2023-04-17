@@ -28,13 +28,13 @@ public class PeopleController {
         this.booksService = booksService;
         this.personValidator = personValidator;
     }
-    //метод GET запроса для отображения всех людей
+    //Get метод для отображения всех людей
     @GetMapping()
     public String index(Model model){
         model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
-    //метод GET запроса для отображения одного человека по id
+    //Get метод для отображения одного человека по id
     @GetMapping("/{id}")
     public String show (@PathVariable("id") int id, Model model){
         model.addAttribute("person", peopleService.findOne(id));
@@ -46,12 +46,12 @@ public class PeopleController {
         books.ifPresent(bookList -> model.addAttribute("books", bookList));
         return "people/show";
     }
-    //метод GET запроса для отображения html формы для заполнения инфы о новом человеке
+    //Get метод отображения html формы для заполнения инфы о новом человеке
     @GetMapping("/new")
     public String newPerson (@ModelAttribute("person") Person person){  //передаем в модель по ключу "person" пустой новый объект
         return "people/new";
     }
-    //метод для приема POST запроса и создания нового человека на основе данных из тела запроса, полученного из формы
+    //POST метод создания нового человека на основе данных из тела запроса, полученного из формы
     @PostMapping()
     public String create(@ModelAttribute ("person") @Valid Person person,
                          BindingResult bindingResult) {
