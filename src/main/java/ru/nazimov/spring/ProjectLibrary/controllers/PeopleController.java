@@ -28,13 +28,13 @@ public class PeopleController {
         this.booksService = booksService;
         this.personValidator = personValidator;
     }
-    //Get метод для отображения всех людей
+    //показать всех людей
     @GetMapping()
     public String index(Model model){
         model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
-    //Get метод для отображения одного человека по id
+    //показать одного человека по id
     @GetMapping("/{id}")
     public String show (@PathVariable("id") int id, Model model){
         model.addAttribute("person", peopleService.findOne(id));
@@ -46,7 +46,7 @@ public class PeopleController {
         books.ifPresent(bookList -> model.addAttribute("books", bookList));
         return "people/show";
     }
-    //Get метод отображения html формы для заполнения инфы о новом человеке
+    //вернуть html форму для заполнения инфы о новом человеке
     @GetMapping("/new")
     public String newPerson (@ModelAttribute("person") Person person){  //передаем в модель по ключу "person" пустой новый объект
         return "people/new";
@@ -63,13 +63,13 @@ public class PeopleController {
         peopleService.save(person);
         return "redirect:/people";      //в форме теперь можно получить доступ к ошибкам, так как person их содержит
     }
-    //Get метод отображения страницы редактирования человека
+    //вернуть страницу редактирования человека
     @GetMapping("/{id}/edit")
     public String edit (@PathVariable int id, Model model){
         model.addAttribute("person", peopleService.findOne(id));
         return "people/edit";
     }
-    //PATCH метод обновления человека на основе данных из тела запроса, полученного из формы
+    //обновить информацию о человеке на основе данных из тела запроса, полученного из формы
     @PatchMapping("/{id}")
     public String update (@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
                           @PathVariable("id") int id){
@@ -79,7 +79,7 @@ public class PeopleController {
         peopleService.update(id, person);
         return "redirect:/people";
     }
-    //DELETE метод удаления человека по его id
+    //удалить человека по его id
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         peopleService.delete(id);

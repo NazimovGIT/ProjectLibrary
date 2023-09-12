@@ -24,7 +24,7 @@ public class BooksController {
         this.booksService = booksService;
         this.peopleService = peopleService;
     }
-    //Get метод отображения всех книг
+    //показать все книги
     @GetMapping()
     public String index(@RequestParam(name = "page", required = false) Integer page,
                         @RequestParam(name = "books_per_page", required = false) Integer booksPerPage,
@@ -34,7 +34,7 @@ public class BooksController {
             model.addAttribute("books", booksService.findAll(page, booksPerPage, isSortByYear));
         return "books/index";
     }
-    //Get метод отображения одной книги по id
+    //показать одну книгу по id
     @GetMapping("/{id}")
     public String show (@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person){
         model.addAttribute("book", booksService.findOne(id));
@@ -47,12 +47,12 @@ public class BooksController {
 
         return "books/show";
     }
-    //метод GET запроса для отображения html формы для заполнения инфы о новой книге
+    //вернуть html форму для заполнения инфы о новой книге
     @GetMapping("/new")
     public String newBook (@ModelAttribute("book") Book book){
         return "books/new";
     }
-    //метод для приема POST запроса и создания новой книги на основе данных из тела запроса, полученного из формы
+    //создать новоую книгу на основе данных из тела запроса, полученного из формы
     @PostMapping()
     public String create(@ModelAttribute ("book") @Valid Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -61,13 +61,13 @@ public class BooksController {
         booksService.save(book);
         return "redirect:/books";
     }
-    //Get метод отображения заполненной страницы редактирования книги
+    //показать заполненную страницу редактирования книги
     @GetMapping("/{id}/edit")
     public String edit (@PathVariable int id, Model model){
         model.addAttribute("book", booksService.findOne(id));
         return "books/edit";
     }
-    //PATCH метод обновления книги на основе данных из тела запроса, полученного из формы
+    //обновить данные о книге на основе данных из тела запроса, полученного из формы
     @PatchMapping("/{id}")
     public String update (@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                           @PathVariable("id") int id){
@@ -76,19 +76,19 @@ public class BooksController {
         booksService.update(id, book);
         return "redirect:/books";
     }
-    //DELETE метод удаления книги по его id
+    //удалить книгу по его id
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         booksService.delete(id);
         return "redirect:/books";
     }
-    //PATCH метод освобождения книги от владельца при нажатии на странице /books/{id}
+    //освободить книгу от владельца при нажатии на странице /books/{id}
     @PatchMapping("/{id}/release")
     public String release(@PathVariable("id") int id){
         booksService.release(id);
         return "redirect:/books/" + id;
     }
-    //PATCH метод назначения книги новому владельцу при выборе на странице /books/{id}
+    //назначить книгу новому владельцу при выборе на странице /books/{id}
     @PatchMapping("/{id}/assign")
     public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson){
         //у selectedPerson из формы пришло только id, остальные поля null
@@ -96,7 +96,7 @@ public class BooksController {
         booksService.assign(id, selectedPerson);
         return "redirect:/books/" + id;
     }
-    //метод поиска книги по названию
+    //поиск книги по названию
     @GetMapping("/search")
     public String searchPage(){
         return "/books/search";
